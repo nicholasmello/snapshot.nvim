@@ -194,9 +194,10 @@ function M.add_unpack_script(dir)
   return true
 end
 
-function M.tar_with_date(output_dir, tar_dir)
+function M.tar_with_date(output_dir, tar_dir, repos)
   local timestamp = os.date("%Y-%m-%d_%H-%M-%S")
   local tar_name = string.format("nvim-snapshot-%s.tar.gz", timestamp)
+  local txt_name = string.format("nvim-snapshot-%s.txt", timestamp)
   local status = os.execute(string.format("tar -C %s -czf %s/%s .", vim.fn.expand(tar_dir), output_dir, tar_name))
   if status == true then
     vim.notify(string.format("Successfully created snapshot at %s/%s", output_dir, tar_name), vim.log.levels.INFO)
@@ -204,6 +205,8 @@ function M.tar_with_date(output_dir, tar_dir)
     vim.notify("Failed to tar bundle", vim.log.levels.ERROR)
     return false
   end
+
+  vim.fn.writefile(repos, txt_name);
 
   return true
 end

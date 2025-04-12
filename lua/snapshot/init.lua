@@ -47,8 +47,8 @@ vim.api.nvim_create_user_command(
       return
     end
 
-    -- Tar it all up
-    status = core.tar_with_date(M.config.output_dir, TMP_DIR)
+    -- Tar it all up and save plugin list
+    status = core.tar_with_date(M.config.output_dir, TMP_DIR, repos)
     if status == false then
       return
     end
